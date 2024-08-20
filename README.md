@@ -16,6 +16,7 @@ Open by typing "/bmusic"
 
   
 ### Install AddOn:
+- [Download the addon](https://github.com/zmarotrix/BattleMusic/releases/tag/Publish)
 - Unpack the file into `World of Warcraft\Interface\AddOns`
 - Rename the folder "BattleMusic-master" to "BattleMusic" if needed
 
