@@ -17,7 +17,7 @@ Open by typing "/bmusic"
   
 ### Install AddOn:
 - Unpack the file into `World of Warcraft\Interface\AddOns`
-- Rename the folder "BattleMusic-master" to "BattleMusic"
+- Rename the folder "BattleMusic-master" to "BattleMusic" if needed
 
 ### Add music:
 - Go into the AddOn's folder "BattleMusic" and then into "music"
