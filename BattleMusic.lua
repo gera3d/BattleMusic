@@ -17,7 +17,7 @@ function BattleMusic_OnLoad()
 
     math.randomseed(time())
 	
-	local playlist = {  "Deja Vu - Inital D.mp3" , "Perfect Day - Legally Blonde.mp3" , "Sleep - Echelon.mp3" , }       
+	local playlist = {}       
 	local playlistLength = table.getn(playlist)
 	
 	
