@@ -26,10 +26,6 @@ Open by typing "/bmusic"
 - Run `Update Playlist.bat` in the music folder
 - Launch World of Warcraft
 
-### Change number of songs to randomize from:
-- Type "/script battleMusic.songs=NUMBER" and replace NUMBER with the number of songs you want it to randomize.  
-Example: /script battleMusic.songs=10
-
 ### Change linger timer [DISABLED]:
 - Type "/script battleMusic.linger=NUMBER" and replace NUMBER with the lingering you want in seconds.  
 Example: /script battleMusic.linger=15.5
