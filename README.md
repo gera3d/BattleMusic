@@ -9,7 +9,8 @@ Transform your combat experience with custom music that starts when you enter ba
 - **Automatic Combat Detection**: Music starts when you enter combat, stops when combat ends
 - **Random Track Selection**: Randomly selects from your music collection for variety
 - **Zone Change Protection**: Music stops when changing zones for seamless gameplay
-- **Easy Configuration**: Simple `/bmusic` command opens the settings menu
+- **Minimap Button**: Convenient minimap button for quick access to settings
+- **Easy Configuration**: Simple `/bmusic` command or minimap button opens the settings menu
 - **Debug Mode**: Track what's happening behind the scenes
 - **Custom Music Support**: Use any MP3 files you want
 
@@ -33,7 +34,13 @@ https://www.youtube.com/watch?v=YXQPcDtmPDo
 - Restart WoW to load new music
 
 ### 3. Configure Settings
-Open the configuration menu by typing in chat:
+Open the configuration menu in one of two ways:
+
+**Option A: Minimap Button** 🎯
+- Look for the drum/music note icon around your minimap
+- Left-click to open the settings menu
+
+**Option B: Chat Command**
 ```
 /bmusic
 ```
@@ -43,6 +50,7 @@ Open the configuration menu by typing in chat:
 **Available Settings:**
 - **Display Track Name**: Shows the current song name in chat when it starts
 - **Debug Mode**: Displays technical information for troubleshooting
+- **Show Minimap Button**: Toggle the minimap button visibility on/off
 
 ---
 
@@ -72,7 +80,8 @@ Open the configuration menu by typing in chat:
   - `PLAYER_REGEN_ENABLED` = Combat ends → Music stops
   - `ZONE_CHANGED_NEW_AREA` = Zone change → Music stops
 - **Random Selection**: Uses `math.random()` to pick tracks from your collection
-- **Saved Settings**: Configuration is saved per character
+- **Minimap Integration**: Custom minimap button with tooltip and click handlers
+- **Saved Settings**: Configuration is saved per character (including button visibility)
 
 ### Current Playlist System
 The addon currently uses a hardcoded playlist of 4 default tracks:

@@ -12,6 +12,87 @@ local SPACING_X = 18
 local SPACING_Y = 45
 local emptywarning = false
 
+-- Minimap Button Settings
+local MINIMAP_BUTTON_NAME = "BattleMusicMinimapButton"
+local minimapButton
+local minimapButtonPosition = 45 -- degrees around the minimap
+
+-- Minimap Button Functions
+local function CreateMinimapButton()
+    if minimapButton then return end
+    
+    minimapButton = CreateFrame("Button", MINIMAP_BUTTON_NAME, Minimap)
+    minimapButton:SetWidth(32)
+    minimapButton:SetHeight(32)
+    minimapButton:SetFrameStrata("MEDIUM")
+    minimapButton:SetFrameLevel(8)
+    
+    -- Button texture (using a default WoW icon for now)
+    local texture = minimapButton:CreateTexture(nil, "BACKGROUND")
+    texture:SetWidth(20)
+    texture:SetHeight(20)
+    texture:SetPoint("CENTER", 0, 1)
+    texture:SetTexture("Interface\\Icons\\INV_Misc_Drum_01") -- Music note/drum icon
+    minimapButton.texture = texture
+    
+    -- Button border
+    local overlay = minimapButton:CreateTexture(nil, "OVERLAY")
+    overlay:SetWidth(32)
+    overlay:SetHeight(32)
+    overlay:SetPoint("CENTER", 0, 0)
+    overlay:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+    
+    -- Click handler
+    minimapButton:SetScript("OnClick", function()
+        -- Open the config menu (same as /bmusic command)
+        SlashCmdList["BMUSIC"]()
+    end)
+    
+    -- Tooltip
+    minimapButton:SetScript("OnEnter", function()
+        GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+        GameTooltip:SetText("BattleMusic", 1, 1, 1)
+        GameTooltip:AddLine("Left-click to open settings", 0.8, 0.8, 0.8)
+        GameTooltip:Show()
+    end)
+    
+    minimapButton:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
+    
+    -- Position the button
+    UpdateMinimapButtonPosition()
+end
+
+local function UpdateMinimapButtonPosition()
+    if not minimapButton then return end
+    
+    local angle = math.rad(minimapButtonPosition)
+    local x = math.cos(angle) * 80
+    local y = math.sin(angle) * 80
+    
+    minimapButton:SetPoint("CENTER", Minimap, "CENTER", x, y)
+end
+
+local function ShowMinimapButton()
+    if minimapButton then
+        minimapButton:Show()
+    end
+end
+
+local function HideMinimapButton()
+    if minimapButton then
+        minimapButton:Hide()
+    end
+end
+
+local function UpdateMinimapButtonVisibility()
+    if battleMusic and battleMusic.showMinimapButton then
+        ShowMinimapButton()
+    else
+        HideMinimapButton()
+    end
+end
 
 function BattleMusic_OnLoad()
 
@@ -24,18 +105,23 @@ function BattleMusic_OnLoad()
 	local addonLoaded = CreateFrame("Frame") 
 		addonLoaded:RegisterEvent("ADDON_LOADED")
 		addonLoaded:SetScript("OnEvent", function()
-		
-		if(battleMusic == nil) then
+				if(battleMusic == nil) then
                 battleMusic={}
 				battleMusic.track = false
                 battleMusic.linger = 0
 				battleMusic.debug = false
+				battleMusic.showMinimapButton = true
             end
+			
+			-- Create the minimap button
+			CreateMinimapButton()
+			UpdateMinimapButtonVisibility()
 			
             CONFIG_SETTINGS_BMUSIC = {
 				[1] = {"Display Track Name in Chat", "bm_track", battleMusic.track, false, "track"},
                 --[2] = {"Linger time (seconds) ", "bm_lingerTime", battleMusic.linger, 0, "linger"},
 				[3] = {"Display Debug Info in Chat", "bm_debug", battleMusic.debug, false, "debug"},
+				[4] = {"Show Minimap Button", "bm_minimap", battleMusic.showMinimapButton, true, "showMinimapButton"},
             }
 		end)
 	
@@ -99,6 +185,7 @@ function BattleMusic_OnLoad()
 		combatEnd:SetScript("OnEvent", function()
 		
 		battleMusic.linger = 0 -- I don't know how to get this to work. 
+		
 		
 			if(battleMusic.linger <= 0)then
 				StopMusic()
@@ -182,6 +269,8 @@ local function SaveData()
         end
     end
 
+    -- Update minimap button visibility after saving settings
+    UpdateMinimapButtonVisibility()
 end
 
 local function ResetData()
@@ -342,4 +431,6 @@ SlashCmdList["BMUSIC"] = function(self, txt)
         _G[CONFIG_FRAME_NAME]:Show()
     end
 
+    -- Create the minimap button
+    CreateMinimapButton()
 end
